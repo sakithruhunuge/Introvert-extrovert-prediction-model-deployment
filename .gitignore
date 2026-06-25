@@ -1,0 +1,20 @@
+# Virtual environment
+venv/
+
+# IDE files
+.idea/
+.vscode/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Agent-specific directories
+.agents/
+.gemini/
+*.log
+walkthrough.md
+task.md
+implementation_plan.md
