@@ -3,7 +3,7 @@ import json
 import joblib
 import numpy as np
 import pandas as pd
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
@@ -17,6 +17,8 @@ LABEL_MAP = meta["label_map"]
 
 @app.route("/", methods=["GET"])
 def health():
+    if request.accept_mimetypes.accept_html:
+        return render_template("index.html")
     return jsonify({
         "status": "ok",
         "model": meta["best_model"],
