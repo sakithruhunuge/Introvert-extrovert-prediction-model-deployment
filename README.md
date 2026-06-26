@@ -1,67 +1,76 @@
 # Personality Analyzer
 
-An intelligent machine learning web application that predicts whether a person is an **Introvert** or **Extrovert** based on 7 key behavioral features. Built using Python, Flask, and Scikit-Learn.
+This project builds a machine learning web app that predicts whether a person is more likely to be an Introvert or an Extrovert based on 7 behavioral features. The app uses Python, Flask, and Scikit-Learn.
 
----
+## Project Overview
 
-## Features
+- Train a classification model on personality-related behavioral data.
+- Deploy the model as a web app and REST API.
+- Provide a simple UI for users to enter features and receive a prediction.
 
-- **Dashboard UI**: A responsive, space-themed dark mode user interface featuring glassmorphic controls and custom sliders.
-- **Spectrum Comparison Chart**: Dynamic probability charts indicating the percentage match for both Introversion and Extroversion.
-- **Dynamic Trait Insights**: Automatically generated text summaries explaining the classification outcome based on user input.
-- **REST API Endpoint**: Standard JSON API endpoint for programmatic classification.
+## Live Demo
 
----
+- Web app: https://web-production-8799e.up.railway.app/
+- API endpoint: https://web-production-8799e.up.railway.app/predict
 
-## Running Locally
+## Model Details
 
-### 1. Set Up Virtual Environment
+- Algorithm: Logistic Regression
+- Test accuracy: 0.9172
+- Input features:
+  - Time_spent_Alone
+  - Stage_fear
+  - Social_event_attendance
+  - Going_outside
+  - Drained_after_socializing
+  - Friends_circle_size
+  - Post_frequency
+
+## Project Files
+
+- app.py: Flask application and prediction API
+- templates/index.html: interactive web interface
+- personality_prediction_notebook.ipynb: data preparation and model training notebook
+- model.pkl: trained model
+- model_meta.json: feature list, label mapping, and model metadata
+
+## Run Locally
+
+### 1. Create and activate a virtual environment
+
+Windows PowerShell:
 ```bash
 python -m venv venv
-.\venv\Scripts\Activate.ps1   # Windows PowerShell
-source venv/bin/activate      # macOS/Linux
+.\venv\Scripts\Activate.ps1
 ```
 
-### 2. Install Dependencies
+macOS/Linux:
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+### 2. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Start the Flask App
+### 3. Start the app
 ```bash
 python app.py
 ```
-Open **`http://127.0.0.1:5000/`** in your browser to access the dashboard.
 
----
+Then open http://127.0.0.1:5000/ in your browser.
 
-## API Documentation
+## API Usage
 
-### `GET /` — Health & Metadata
-Returns model details and expected features. Serve HTML dashboard if requested by a browser.
+### GET /
+Returns health information and the expected input fields.
 
-**Sample JSON Response:**
-```json
-{
-  "expected_fields": [
-    "Time_spent_Alone",
-    "Stage_fear",
-    "Social_event_attendance",
-    "Going_outside",
-    "Drained_after_socializing",
-    "Friends_circle_size",
-    "Post_frequency"
-  ],
-  "model": "Logistic Regression",
-  "status": "ok",
-  "test_accuracy": 0.9172
-}
-```
+### POST /predict
+Accepts a JSON payload with one record or a list of records.
 
-### `POST /predict` — Run Classification
-Accepts a JSON payload (single record or list of records) and returns predictions.
-
-**Request Body:**
+Example request:
 ```json
 {
   "Time_spent_Alone": 7,
@@ -74,7 +83,7 @@ Accepts a JSON payload (single record or list of records) and returns prediction
 }
 ```
 
-**Response:**
+Example response:
 ```json
 {
   "prediction": "Introvert",
@@ -86,13 +95,11 @@ Accepts a JSON payload (single record or list of records) and returns prediction
 }
 ```
 
----
+## Deployment
 
-## Deployment (Render)
+This project is deployed on Railway.
 
-1. Push this repository to GitHub.
-2. Link the repository to a new **Web Service** on [Render](https://render.com).
-3. Set the build environment to Python and the start command to:
-   ```bash
-   gunicorn app:app
-   ```
+For deployment, the app is started using:
+```bash
+gunicorn app:app
+```
